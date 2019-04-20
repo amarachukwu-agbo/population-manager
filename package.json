@@ -1,0 +1,57 @@
+{
+  "name": "population-manager",
+  "description": "An API that manages population records in locations",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "@babel/runtime": "^7.4.3",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "pg": "^7.10.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^5.7.1",
+    "sequelize-cli": "^5.4.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-transform-runtime": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.7.1",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "jest": "^24.7.1",
+    "nodemon": "^1.18.11",
+    "supertest": "^4.0.2"
+  },
+  "scripts": {
+    "test": "jest",
+    "start:dev": "nodemon --exec babel-node src/index.js",
+    "build": "babel src --out-dir dist",
+    "start": "node dist/index.js",
+    "lint": "eslint src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amarachukwu-agbo/population-manager.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "postgres",
+    "sequelize"
+  ],
+  "author": "Amarachukwu Agbo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amarachukwu-agbo/population-manager/issues"
+  },
+  "homepage": "https://github.com/amarachukwu-agbo/population-manager#readme"
+}
