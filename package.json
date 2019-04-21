@@ -39,7 +39,8 @@
     "migrate": "node_modules/.bin/sequelize db:migrate",
     "test": "jest --forceExit",
     "pretest": "NODE_ENV=test yarn migrate",
-    "start:dev": "nodemon --exec babel-node src/index.js"
+    "start:dev": "nodemon --exec babel-node src/index.js",
+    "heroku-postbuild": "yarn build"
   },
   "repository": {
     "type": "git",

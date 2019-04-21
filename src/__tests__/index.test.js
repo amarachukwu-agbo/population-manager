@@ -157,8 +157,8 @@ describe('Location Routes', () => {
           .toEqual('Locations retrieved successfully');
         expect(response.body.locations.length)
           .toBe(2);
-        expect(response.body.locations[0].subLocations.length)
-          .toBe(1);
+        expect(response.body.locations[0])
+          .toHaveProperty('subLocations');
         done();
       });
   });
