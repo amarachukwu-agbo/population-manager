@@ -9,6 +9,7 @@
     "cors": "^2.8.5",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
+    "express-validator": "^5.3.1",
     "pg": "^7.10.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^5.7.1",
@@ -32,11 +33,13 @@
     "supertest": "^4.0.2"
   },
   "scripts": {
-    "test": "jest",
-    "start:dev": "nodemon --exec babel-node src/index.js",
     "build": "babel src --out-dir dist",
     "start": "node dist/index.js",
-    "lint": "eslint src/"
+    "lint": "eslint src/",
+    "migrate": "node_modules/.bin/sequelize db:migrate",
+    "test": "jest --forceExit",
+    "pretest": "NODE_ENV=test yarn migrate",
+    "start:dev": "nodemon --exec babel-node src/index.js"
   },
   "repository": {
     "type": "git",
