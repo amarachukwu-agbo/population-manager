@@ -8,7 +8,7 @@ An API that manages population records in locations
 
 ## Hosting
 * The API is hosted on https://amara-population-manager.herokuapp.com/api/v1/
-and is documented [here] (https://documenter.getpostman.com/view/5174456/S1ETSHNC)
+and is documented [here](https://documenter.getpostman.com/view/5174456/S1ETSHNC)
 
 ## Technologies used
 * [JavaScript](https://www.javascript.com/) - A programming language for the web
