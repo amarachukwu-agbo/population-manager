@@ -22,6 +22,11 @@ module.exports = {
     },
     parentLocationId: {
       type: Sequelize.INTEGER,
+      references: {
+        model: 'Locations',
+        key: 'id',
+        onDelete: 'CASCADE',
+      },
     },
     createdAt: {
       allowNull: false,
