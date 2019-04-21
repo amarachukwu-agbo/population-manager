@@ -1,29 +1,88 @@
 import models from '../../models';
 
+const { sequelize } = models;
 class Location {
   static async createLocation(req, res) {
-    const { name, parentLocationId } = req.body;
-    const query = {
-      where: {
-        name,
-      },
-    };
-    if (parentLocationId) query.where = { name, parentLocationId };
-    const locationExists = await models.Location.findOne(query);
-    if (locationExists) {
-      return res.status(409).json({
+    try {
+      const { dataValues } = await models.Location.create(req.body);
+      return res.status(201).json({
+        message: 'Location successfully created',
+        location: {
+          ...dataValues,
+          totalResidents: dataValues.femaleOccupantCount + dataValues.maleOccupantCount,
+        },
+      });
+    } catch (error) { // istanbul ignore next
+      return res.status(500).json({
         message: 'Error creating location',
-        error: 'A location with this name and parent location already exists',
+        error,
       });
     }
-    const { dataValues } = await models.Location.create(req.body);
-    return res.status(201).json({
-      message: 'Location successfully created',
-      location: {
-        ...dataValues,
-        totalResidents: dataValues.femaleOccupantCount + dataValues.maleOccupantCount,
-      },
-    });
+  }
+
+  static async getAllLocations(req, res) {
+    try {
+      const locations = await models.Location.findAll({
+        attributes: ['id', 'name', 'maleOccupantCount', 'femaleOccupantCount', [
+          sequelize.literal('"Location"."maleOccupantCount" + "Location"."femaleOccupantCount"'), 'totalCount',
+        ]],
+        include: [
+          { model: models.Location, as: 'parentLocation' },
+          {
+            model: models.Location,
+            as: 'subLocations',
+            attributes: ['id', 'name', 'maleOccupantCount', 'femaleOccupantCount', [
+              sequelize.literal('"subLocations"."maleOccupantCount" + "subLocations"."femaleOccupantCount"'), 'totalCount',
+            ]],
+          }],
+      });
+      return res.status(200).json({
+        message: 'Locations retrieved successfully',
+        locations,
+      });
+    } catch (error) { // istanbul ignore next
+      return res.status(500).json({
+        message: 'Error retrieving locations',
+        error,
+      });
+    }
+  }
+
+  static async updateLocation(req, res) {
+    try {
+      const { location, params: { locationId } } = req;
+      if (req.body.parentLocationId === +locationId) {
+        return res.status(400).json({
+          message: 'Error updating location',
+          error: 'parentLocationId should not be the same as locationId',
+        });
+      }
+      await location.update(req.body);
+      return res.status(200).json({
+        message: 'Location updated successfully',
+        location,
+      });
+    } catch (error) { // istanbul ignore next
+      return res.status(500).json({
+        message: 'Error updating location',
+        error,
+      });
+    }
+  }
+
+  static async deleteLocation(req, res) {
+    try {
+      const { location } = req;
+      await location.destroy();
+      return res.status(200).json({
+        message: 'Location deleted successfully',
+      });
+    } catch (error) { // istanbul ignore next
+      return res.status(500).json({
+        message: 'Error updating location',
+        error,
+      });
+    }
   }
 }
 

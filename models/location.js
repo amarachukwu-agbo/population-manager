@@ -21,8 +21,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'parentLocationId',
     });
     Location.hasMany(models.Location, {
-      as: 'subLocation',
+      as: 'subLocations',
       foreignKey: 'parentLocationId',
+      hooks: true,
+      onDelete: 'cascade',
     });
   };
   return Location;
